@@ -4,6 +4,8 @@
  */
 package application;
 
+import boardgame.Position;
+
 /**
  *
  * @author JonOliver
@@ -15,7 +17,8 @@ public class Program {
      */
     public static void main(String[] args) {
         
-        System.out.println("Hello world!");
+        Position ps = new Position(3, 5);
+        System.out.println(ps);
     }
     
 }
