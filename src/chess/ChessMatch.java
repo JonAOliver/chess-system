@@ -13,7 +13,6 @@ import chess.pieces.Knight;
 import chess.pieces.Pawn;
 import chess.pieces.Queen;
 import chess.pieces.Rook;
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -130,7 +129,7 @@ public class ChessMatch {
             throw new IllegalStateException("There is on piece to be promoted");
         }
         if (!type.equals("B") && !type.equals("N") && !type.equals("R") && !type.equals("Q")){
-            throw new InvalidParameterException("Invalid type for promotion");
+            return promoted;
         }
         
         Position pos = promoted.getChessPosition().toPosition();
@@ -164,20 +163,19 @@ public class ChessMatch {
         
         // #specialMove catling kingside rook
         
-        if(p instanceof King && target.getColumn() == source.getColumn() + 2){
+        if (p instanceof King && target.getColumn() == source.getColumn() + 2) {
             Position sourceT = new Position(source.getRow(), source.getColumn() + 3);
-            Position targetT = new Position(target.getRow(), target.getColumn() + 1);
-            ChessPiece rook = (ChessPiece)board.removePiece(sourceT);
+            Position targetT = new Position(source.getRow(), source.getColumn() + 1);
+            ChessPiece rook = (ChessPiece) board.removePiece(sourceT);
             board.placePiece(rook, targetT);
             rook.increaseMoveCount();
         }
-        
-        // #specialMove queenside rook
-        
-        if(p instanceof King && target.getColumn() == source.getColumn() - 2){
-            Position sourceT = new Position(source.getRow(), source.getColumn() -4);
-            Position targetT = new Position(target.getRow(), target.getColumn() - 1);
-            ChessPiece rook = (ChessPiece)board.removePiece(sourceT);
+
+        // #specialmove castling queenside rook
+        if (p instanceof King && target.getColumn() == source.getColumn() - 2) {
+            Position sourceT = new Position(source.getRow(), source.getColumn() - 4);
+            Position targetT = new Position(source.getRow(), source.getColumn() - 1);
+            ChessPiece rook = (ChessPiece) board.removePiece(sourceT);
             board.placePiece(rook, targetT);
             rook.increaseMoveCount();
         }
@@ -215,20 +213,19 @@ public class ChessMatch {
         
          // #specialMove castling kingside rook
         
-        if(p instanceof King && target.getColumn() == source.getColumn() + 2){
+        if (p instanceof King && target.getColumn() == source.getColumn() + 2) {
             Position sourceT = new Position(source.getRow(), source.getColumn() + 3);
-            Position targetT = new Position(target.getRow(), target.getColumn() + 1);
-            ChessPiece rook = (ChessPiece)board.removePiece(targetT);
+            Position targetT = new Position(source.getRow(), source.getColumn() + 1);
+            ChessPiece rook = (ChessPiece) board.removePiece(targetT);
             board.placePiece(rook, sourceT);
             rook.decreaseMoveCount();
         }
-        
-        // #specialMove  queenside rook
-        
-        if(p instanceof King && target.getColumn() == source.getColumn() - 2){
-            Position sourceT = new Position(source.getRow(), source.getColumn() -4);
-            Position targetT = new Position(target.getRow(), target.getColumn() - 1);
-            ChessPiece rook = (ChessPiece)board.removePiece(targetT);
+
+        // #specialmove castling queenside rook
+        if (p instanceof King && target.getColumn() == source.getColumn() - 2) {
+            Position sourceT = new Position(source.getRow(), source.getColumn() - 4);
+            Position targetT = new Position(source.getRow(), source.getColumn() - 1);
+            ChessPiece rook = (ChessPiece) board.removePiece(targetT);
             board.placePiece(rook, sourceT);
             rook.decreaseMoveCount();
         }
